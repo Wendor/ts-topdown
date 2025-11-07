@@ -4,6 +4,7 @@ import { Game as MainGame } from './scenes/Game';
 import { MainMenu } from './scenes/MainMenu';
 import { Game, Types } from 'phaser';
 import { Preloader } from './scenes/Preloader';
+import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -32,7 +33,14 @@ const config: Types.Core.GameConfig = {
         MainMenu,
         MainGame,
         GameOver
-    ]
+    ],
+    plugins: {
+        global: [{
+            key: 'rexVirtualJoystick',
+            plugin: VirtualJoystickPlugin,
+            start: true
+        }]
+    }
 };
 
 const StartGame = (parent: string) => {

@@ -1,3 +1,4 @@
+import { Game } from "@/game/scenes/Game";
 import { Entity } from "./Entity";
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -7,9 +8,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         base: Phaser.GameObjects.Sprite;
         tools: Phaser.GameObjects.Sprite;
     };
+    scene: Game;
 
-    constructor (scene: Phaser.Scene, x: number, y: number, textures: { base: string; hair: string; tools: string }) {
+    constructor (scene: Game, x: number, y: number, textures: { base: string; hair: string; tools: string }) {
         super(scene, x, y, textures.base);
+        this.scene = scene;
         this.sprites= {
             base: new Entity(scene, x, y, textures.base),
             hair: new Entity(scene, x, y, textures.hair),
@@ -86,7 +89,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             right: Phaser.Input.Keyboard.KeyCodes.D,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
 
-        if (!this.body || !keys || !kbKeys) {
+        const joyKeys = this.scene.joystick?.createCursorKeys();
+
+        if (!this.body || !keys || !kbKeys || !joyKeys) {
             return;
         }
 
@@ -95,10 +100,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         let speed = this.moveSpeed;
 
         const pressedArrows = [
-            keys.down.isDown || kbKeys.down.isDown,
-            keys.left.isDown || kbKeys.left.isDown,
-            keys.right.isDown || kbKeys.right.isDown,
-            keys.up.isDown || kbKeys.up.isDown,
+            keys.down.isDown || kbKeys.down.isDown || joyKeys.down.isDown,
+            keys.left.isDown || kbKeys.left.isDown || joyKeys.left.isDown,
+            keys.right.isDown || kbKeys.right.isDown || joyKeys.right.isDown,
+            keys.up.isDown || kbKeys.up.isDown || joyKeys.up.isDown,
         ].filter(k => k).length;
 
         if (pressedArrows > 1) {
@@ -113,17 +118,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             this.startAnimation('idle');
         }
 
-        if (keys.up.isDown || kbKeys.up.isDown) {
+        if (keys.up.isDown || kbKeys.up.isDown || joyKeys.up.isDown) {
             this.body.velocity.y += -delta * speed;
         }
-        if (keys.down.isDown || kbKeys.down.isDown) {
+        if (keys.down.isDown || kbKeys.down.isDown || joyKeys.down.isDown) {
             this.body.velocity.y += delta * speed;
         }
-        if (keys.left.isDown || kbKeys.left.isDown) {
+        if (keys.left.isDown || kbKeys.left.isDown || joyKeys.left.isDown) {
             this.body.velocity.x += -delta * speed;
             this.flipX = true;
         }
-        if (keys.right.isDown || kbKeys.right.isDown) {
+        if (keys.right.isDown || kbKeys.right.isDown || joyKeys.right.isDown) {
             this.body.velocity.x += delta * speed;
             this.flipX = false;
         }

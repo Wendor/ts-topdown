@@ -1,14 +1,31 @@
 import { Scene } from 'phaser';
 import { Player } from '../../entities/Player';
+import VirtualJoystick from 'phaser3-rex-plugins/plugins/virtualjoystick.js';
 
 export class Game extends Scene
 {
     player?: Player;
     fpsMeter:  Phaser.GameObjects.Text;
+    joystick?: VirtualJoystick;
 
     constructor ()
     {
         super('Game');
+        window.addEventListener("touchstart", () => {
+            if (this.joystick) {
+                return;
+            }
+
+            // @ts-ignore
+            this.joystick = this.plugins.get('rexVirtualJoystick')?.add(this, {
+                x: 80,
+                y: 285,
+                radius: 30,
+                base: this.add.circle(0, 0, 30, 0x888888),
+                thumb: this.add.circle(0, 0, 15, 0xcccccc),
+                dir: '8dir',
+            }) as VirtualJoystick;
+        }, false);
     }
 
     create ()
