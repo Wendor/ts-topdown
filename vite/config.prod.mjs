@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 
 const phasermsg = () => {
     return {
@@ -36,12 +37,19 @@ export default defineConfig({
             format: {
                 comments: false
             }
-        }
+        },
+        outDir: 'docs',
     },
     server: {
+        host: true,
         port: 8080
     },
     plugins: [
         phasermsg()
-    ]
+    ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url))
+        },
+    },
 });
