@@ -1,0 +1,52 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "some.tmj",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "base_tiles.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "home.tmj": {
+            "scale": 1.3022916666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 239.9616061430171,
+                "y": 160.48632218844983
+            }
+        },
+        "home.tmj#base_tiles": {
+            "scaleInDock": 1
+        },
+        "some.tmj": {
+            "scale": 2.0887,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 121.6067410350936,
+                "y": 131.9002250203476
+            }
+        },
+        "some.tmj#base_tiles": {
+            "scaleInDock": 1
+        }
+    },
+    "map.fixedSize": false,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "home.tmj",
+        "some.tmj"
+    ],
+    "project": "tilemaps.tiled-project",
+    "recentFiles": [
+        "home.tmj",
+        "some.tmj",
+        "base_tiles.tsx"
+    ]
+}
