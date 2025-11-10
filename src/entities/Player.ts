@@ -13,7 +13,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     constructor (scene: Game, x: number, y: number, textures: { base: string; hair: string; tools: string }) {
         super(scene, x, y, textures.base);
         this.scene = scene;
-        this.sprites= {
+        this.sprites = {
             base: new Entity(scene, x, y, textures.base),
             hair: new Entity(scene, x, y, textures.hair),
             tools: new Entity(scene, x, y, textures.tools),
@@ -91,7 +91,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
         const joyKeys = this.scene.joystick?.createCursorKeys();
 
-        if (!this.body || !keys || !kbKeys || !joyKeys) {
+        if (!this.body) {
+            return;
+        }
+
+        if (!keys && !kbKeys && !joyKeys) {
             return;
         }
 
@@ -100,10 +104,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         let speed = this.moveSpeed;
 
         const pressedArrows = [
-            keys.down.isDown || kbKeys.down.isDown || joyKeys.down.isDown,
-            keys.left.isDown || kbKeys.left.isDown || joyKeys.left.isDown,
-            keys.right.isDown || kbKeys.right.isDown || joyKeys.right.isDown,
-            keys.up.isDown || kbKeys.up.isDown || joyKeys.up.isDown,
+            keys?.down.isDown || kbKeys?.down.isDown || joyKeys?.down.isDown,
+            keys?.left.isDown || kbKeys?.left.isDown || joyKeys?.left.isDown,
+            keys?.right.isDown || kbKeys?.right.isDown || joyKeys?.right.isDown,
+            keys?.up.isDown || kbKeys?.up.isDown || joyKeys?.up.isDown,
         ].filter(k => k).length;
 
         if (pressedArrows > 1) {
@@ -118,17 +122,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             this.startAnimation('idle');
         }
 
-        if (keys.up.isDown || kbKeys.up.isDown || joyKeys.up.isDown) {
+        if (keys?.up.isDown || kbKeys?.up.isDown || joyKeys?.up.isDown) {
             this.body.velocity.y += -delta * speed;
         }
-        if (keys.down.isDown || kbKeys.down.isDown || joyKeys.down.isDown) {
+        if (keys?.down.isDown || kbKeys?.down.isDown || joyKeys?.down.isDown) {
             this.body.velocity.y += delta * speed;
         }
-        if (keys.left.isDown || kbKeys.left.isDown || joyKeys.left.isDown) {
+        if (keys?.left.isDown || kbKeys?.left.isDown || joyKeys?.left.isDown) {
             this.body.velocity.x += -delta * speed;
             this.flipX = true;
         }
-        if (keys.right.isDown || kbKeys.right.isDown || joyKeys.right.isDown) {
+        if (keys?.right.isDown || kbKeys?.right.isDown || joyKeys?.right.isDown) {
             this.body.velocity.x += delta * speed;
             this.flipX = false;
         }
